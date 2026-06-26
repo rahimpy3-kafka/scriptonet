@@ -1,3 +1,28 @@
-ScriptoNet: Computational Literary TherapeuticsA Transformer-Based Multi-Task Framework for Detecting, Classifying, and Quantifying Therapeutic Mechanisms in Literary Fiction.  ScriptoNet is a multi-task deep learning framework designed to bridge computational Natural Language Processing (NLP) and the Medical Humanities. It detects the presence of therapeutic events in literary texts, classifies them into specific mechanism types, and estimates the intensity of the therapeutic movement.  The model was originally trained and evaluated on the McEwan Therapeutic Corpus, an expert-annotated collection of over 1,200 passages from the major adult fiction of Ian McEwan.  👥 Authors & ContactNameAffiliationContactAbdul RahimAssociate Professor, Malla Reddy Engineering College for Women, Hyderabad, Indiaabdulrahim_ece@mrecw.co.in  Mohammed Ali ShaikAssociate Professor, CSE, SR University, Warangal, Indiaali@sru.edu.in  🏗️ Architecture OverviewScriptoNet leverages contextual embeddings and sequential modeling to capture subtle literary cues. The architecture consists of three main components:Encoder: A pre-trained RoBERTa-base model generates contextual embeddings for passages up to 512 tokens.  Sequential Representation: A 2-layer Bidirectional LSTM (BiLSTM) processes the encoder's output to capture distributed narrative cues (e.g., retrospective confession, affective release).  Multi-Task Heads: The shared sequence representation feeds into three task-specific output heads.  The Three Prediction TasksBinary Detection: A sigmoid-activated head determining if a therapeutic event is present (Yes/No).  Mechanism Classification: A softmax-activated head classifying the text into one of five therapeutic categories.  Intensity Regression: A continuous output scoring the intensity of the therapeutic movement on a scale of 1 to 5.  🏷️ Therapeutic Mechanism ClassesThe classification head identifies the following theoretically grounded therapeutic categories:  MechanismDescriptionScriptotherapyWriting as a process of trauma healing and moral reworking.  Poetry TherapyPoetry acting as an epiphanic catalyst and structured medium for emotional processing.  Music TherapyMusic serving as an emotional, non-verbal medium for affective resonance and trauma mediation.  Narrative ReconstructionRe-storying identity and re-ordering broken experiences after a rupture.  Emotional CatharsisThe release and externalization of repressed affect and emotion.  🧮 Multi-Task Loss FunctionThe model is trained using a composite loss objective. To handle the class imbalance between therapeutic and non-therapeutic passages, the detection head utilizes Focal Loss.  $\mathcal{L} = \lambda_{det} \mathcal{L}_{det} + \lambda_{cls} \mathcal{L}_{cls} + \lambda_{reg} \mathcal{L}_{reg}$  Detection Loss ($\mathcal{L}_{det}$): Focal loss ($\lambda_{det} = 1.0$).  Classification Loss ($\mathcal{L}_{cls}$): Categorical cross-entropy ($\lambda_{cls} = 1.5$).  Regression Loss ($\mathcal{L}_{reg}$): Mean squared error ($\lambda_{reg} = 0.5$).  📊 Model PerformanceWhen evaluated on the McEwan Therapeutic Corpus using stratified 10-fold cross-validation, ScriptoNet achieved the following results, outperforming standard single-task baselines (like BERT-base and MentalBERT):  Detection F1 Score: 0.91  Mechanism Classification Macro F1: 0.88  Intensity Mean Absolute Error (MAE): 0.42  Intensity Spearman's Rank Correlation ($\rho$): 0.83  📂 Repository Structuresrc/model.py: Contains the core PyTorch ScriptoNet architecture (RoBERTa + BiLSTM + 3 Heads).src/loss.py: Implements the custom multi-task loss function and Focal Loss.src/dataset.py: PyTorch Dataset and DataLoader scripts for tokenizing text with Hugging Face.src/generate_mock_data.py: A utility script to generate a synthetic .csv dataset for immediate testing.src/train.py: Training loop and optimization (AdamW) setup.🚀 Quick Start1. Install DependenciesEnsure you have PyTorch and Hugging Face Transformers installed.pip install torch transformers pandas scikit-learn numpy2. Generate Mock Data
-If you do not have access to the private McEwan Therapeutic Corpus, generate a synthetic test dataset:
-python src/generate_mock_data.py  3. Run the PipelineTest the data pipeline and model initialization:python src/dataset.py
+## 📂 Data Access & Availability
+
+### McEwan Therapeutic Corpus
+The original McEwan Therapeutic Corpus is a **private, expert-annotated dataset** consisting of over 1,200 passages from Ian McEwan's major adult fiction. This dataset is **not included** in this repository due to:
+
+- **Copyright restrictions** on the source literary texts
+- **Licensing agreements** with the publishers
+- **Ethical considerations** regarding the distribution of annotated literary excerpts
+
+### Access Request
+Researchers interested in replicating or extending this work may request access to the dataset by contacting the corresponding author:
+
+**Abdul Rahim**  
+Email: abdulrahim_ece@mrecw.co.in
+
+Requests should include:
+- A brief description of the proposed research use
+- Institutional affiliation and research context
+- Agreement to comply with fair use and copyright guidelines
+
+### Testing the Pipeline
+A synthetic data generator (`src/generate_mock_data.py`) is provided to:
+- Test the data pipeline and model initialization
+- Validate the codebase functionality
+- Experiment with the architecture without the original corpus
+
+### Code Availability
+All code is released under an open-source license and is fully reproducible.
