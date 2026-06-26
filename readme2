@@ -1,0 +1,40 @@
+# ScriptoNet
+
+ScriptoNet is a multi-task transformer-based framework for detecting, classifying, and quantifying therapeutic mechanisms in literary fiction.
+
+---
+
+## 📌 Problem Statement
+This project analyzes therapeutic mechanisms in literary passages using NLP models.
+
+---
+
+## 🧠 Model Architecture
+- RoBERTa encoder
+- BiLSTM layer
+- 3 output heads:
+  - Therapeutic event detection
+  - Mechanism classification (5 classes)
+  - Intensity regression
+
+---
+
+## 📊 Tasks
+1. Binary classification (Therapeutic event detection)
+2. Five-class mechanism classification
+3. Intensity prediction (1–5 scale)
+
+---
+
+## 📁 Dataset
+McEwan Therapeutic Corpus (expert annotated literary passages)
+
+---
+
+## ⚙️ How to Run
+
+```bash
+git clone https://github.com/rahimpy3-kafka/scriptonet
+cd scriptonet
+pip install -r requirements.txt
+python train.py
